@@ -16,9 +16,8 @@
   "scripts": {
     "webpack": "webpack",
     "start": "webpack-dev-server",
-	"test": "concurrently \"webpack\" \"start\""
+	"test": "webpack | webpack-dev-server"
   },
   "author": "suman",
   "license": "ISC",
-  "watch": true
 }
