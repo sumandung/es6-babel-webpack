@@ -1,86 +1,77 @@
+
 	class Mychart {
-	constructor(no_of_bars,position){
+	constructor(no_of_bars,position,container,progressDiv){
 		this.bars = [];
 		this.data = [];
 		this.no_of_bars = no_of_bars;
 		this.position = position;
 		this.timer = 0;
-		this.setInterval = false;
+		this.container = container;
+		this.progressDiv = progressDiv;
+		this.containerStatus = false;
 		this.update();
 	}
 	
 	update() { 
-		this.data = [];
+		//this.data = [];
+		
 		for(let i = 0; i<this.no_of_bars; i++){
-			this.data.push(Math.floor(Math.random()*20)+50);
+			this.data[i] = (Math.floor(Math.random()*20)+50);
 		}
-		if(this.bars.length == 0){
+		if(!this.containerStatus){
+			this.bars = [];
 			this.addContainers();
+		} 
+		if(this.position == 'h'){
+			this.horizontal();
+		} else {
+			this.vertical();
 		}
-		this.horizontal();
 	}
 	
 	addContainers(){
-		let main = document.getElementById('mainContainer');
+		this.containerStatus = true;
+		let main = this.container;
+		main.innerHTML = '';
+		var me = this;
 		for(let i =0; i<this.no_of_bars; i++){
 			let d = document.createElement('li');
-			d.class = "width";
-			d.id = "bar"+i;
+			d.className = "width";
 			this.bars.push(d);
 			main.appendChild(d);
+			d.addEventListener('mouseover', function(){
+				if(this.className == "width"){
+					var ht = this.style.height.split('px');
+					document.getElementById(me.progressDiv).innerHTML = 'Progress : '+(ht[0])+'%';
+				} else {
+					var wd = this.style.width.split('px');
+					document.getElementById(me.progressDiv).innerHTML = 'Progress : '+(wd[0])+'%';
+				}
+			});
 		}
 	}
 	
 	horizontal(){
+		this.position = 'h';
 		for(let i =0; i<this.no_of_bars; i++){
-			this.bars[i].className = "height";
 			this.bars[i].style.width = this.data[i]+'px';
+			this.bars[i].className = "height";
 		}
 	}
 	
 	vertical(){
+		this.position = 'v';
 		for(let i =0; i<this.no_of_bars; i++){
-			this.bars[i].className = "width";
 			this.bars[i].style.height = this.data[i]+'px';
+			this.bars[i].className = "width";
 		}
 	}
 	
 	destroy(){
-		let main = document.getElementById('mainContainer');
+		let main = this.container;
 		main.innerHTML = '';
-	}
-	
-	timer(){
-		if(!this.setInterval){
-		 this.setInterval = true;
-		 this.timer = setInterval(function(){
-			this.update();
-		 },1000);
-		} else {
-			this.setInterval = false;
-			clearInterval(this.timer);
-		}
 	}
 }
 
-let c = new Mychart(10, 'h');
 
-document.getElementById('update').addEventListener("click", function(){
-	c.update();
-}, false);
-
-document.getElementById('destroy').addEventListener("click", function(){
-	c.destroy();
-}, false);
-
-document.getElementById('horizontal').addEventListener("click", function(){
-	c.horizontal();
-}, false);
-
-document.getElementById('vertical').addEventListener("click", function(){
-	c.vertical();
-}, false);
-
-document.getElementById('timer').addEventListener("click", function(){
-	c.timer();
-}, false);
+module.exports = Mychart;

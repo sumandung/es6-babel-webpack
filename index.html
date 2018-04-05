@@ -1,33 +1,8 @@
 <!DOCTYPE html>
-
-<style>
-.width {
-width:1rem !important;
-margin-right:10px;
-background-color:green;
-display: inline-block;
-vertical-align: bottom;
-border: 1px solid black;
-}
-
-.height {
-height:1rem !important;
-margin-bottom:10px;
-background-color:green;
-border: 1px solid black;
-}
-
-.main {
-    margin-bottom: 50px;
-    border: 1px solid;
-    padding: 10px;
-    display: inline-block;
-}
-.main li {
-  list-style:none;
-}
-</style>
-
+<head></head>
+<body>
+<div class ="container">
+<div id="progress"></div>
 <ul id ="mainContainer" class="main">
 </ul> 
 <div>
@@ -35,10 +10,13 @@ border: 1px solid black;
 <button id="destroy">Destroy</button>
 <button id="horizontal">Horizontal</button>
 <button id="vertical">Vertical</button>
-<button id="timer">Timer</button>
+<button id="timer">Start Timer</button>
 </div>
+</div>
+</body>
 
-<script src = "build/app.js"></script>
+<script src = "build/bundle.js"></script>
+<link rel="stylesheet" href="build/styles/style.css" data-hot>
 
 </html>
 
